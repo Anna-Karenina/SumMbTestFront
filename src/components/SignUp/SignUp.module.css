@@ -1,0 +1,6 @@
+.inputUserData{
+  margin: 3%;
+}
+.inputUserData:nth-child(2n+1){
+  margin-bottom: 0 ;
+}
