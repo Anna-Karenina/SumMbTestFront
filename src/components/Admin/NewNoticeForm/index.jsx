@@ -5,6 +5,7 @@ import { noticeActions } from './../../../Redux/Actions'
 import { Input, Form, List, Card, Button,Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
+
 const AddNewNotification = props => {
   const {
     values,
@@ -14,6 +15,7 @@ const AddNewNotification = props => {
     handleSubmit,
     isSubmitting,
     setFieldValue,
+    isValid,
   } = props;
   console.log(props)
 
@@ -69,7 +71,7 @@ const AddNewNotification = props => {
         <Option value="music">Музыка</Option>
       </Select><br />
       {errors.title &&  errors.discription && <div id="feedback">{errors.title || errors.discription}</div>}
-      <Button loading = {isSubmitting} onClick={handleSubmit}>Отправить</Button>
+      <Button disabled ={!isValid} loading = {isSubmitting} onClick={handleSubmit}>Отправить</Button>
     </Form>
       </Card>
     </List.Item>
@@ -90,15 +92,19 @@ const EnhancedAddNewNotification = withFormik({
     else if(values.title.length > 240) {
       errors.title = 'Максимальная длина заголовка 240 символов';
     }
-    else if (!values.discription) {
+    if (!values.discription) {
       errors.discription = 'Описание не должно быть пустое';
+    }
+    if (!values.category){
+      errors.category = 'Категория должена быть выбрана';
     }
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting, props }) => {
+  handleSubmit: (values, { setSubmitting,resetForm, props }) => {
     setSubmitting(true)
      props.setNoticeData(values)
+     resetForm()
       setSubmitting(false);
   },
 // TODO: асинхронные запросы не работают, алерт с подтверждением

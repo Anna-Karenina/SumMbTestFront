@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux'
-import { Button, notification } from 'antd';
+import { Button, notification, Card } from 'antd';
 import {noticeActions} from '../Redux/Actions'
 import socket from '../utils/socket'
 import  AppModal  from "./../components/Modal/Modal";
@@ -41,6 +41,7 @@ const updateReadStatus = (item, usersId) =>{
     console.log(data)
   })
 }
+
 const  PublicPage = ({notifications, setStoreNoticeData,fetchAllNoticeData,fetchSortNoticeData , usersId})=> {
   const onNewNotification = data => {
     setStoreNoticeData([data]);
@@ -69,10 +70,15 @@ const  PublicPage = ({notifications, setStoreNoticeData,fetchAllNoticeData,fetch
   </Button>
     <br />
     <br />
-    <span>при нажатии на кноку воспроизводятся все уведомления</span>
-    <br />
-    <br />
-    <span>иначе, автоматически показываются те, у которых нету статуса прочитанно, и уведомления не находятся в группе скрытых для конкретного пользователя, отредактировть группы можно пока только нажав "подробнее"  на уведомления</span>
+    <div style={{display: 'flex', flexDirection: 'row', padding: '2vw'}}>
+    <Card title="показать уведомления"  style={{ width: '32vw', margin: '2vw'}}>
+      <p>при нажатии на кнопку воспроизводятся все уведомления которые есть в бд</p>
+    </Card>
+    <Card title='подробнее' style={{ width: '32vw', margin: '2vw'}}>
+      <p>Автоматически показываются те,которые выкладываются оналйн из меню администратора(по вэбсокетам) и у которых нету статуса прочитанно и их нету в группе скрытых для конкретного пользователя. Отредактировть группы можно пока только нажав "подробнее"  на уведомлении </p>
+    </Card>
+    </div>
+
     </div>
   );
 }

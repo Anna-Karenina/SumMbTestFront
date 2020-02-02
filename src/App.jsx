@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css'
-import { Switch, Route} from "react-router-dom";
+import { Switch, Route, Redirect} from "react-router-dom";
 import Auth from './pages/Auth'
 import { connect } from 'react-redux'
 import  AdminMenu from './containers/AdminMenu'
@@ -10,15 +10,24 @@ import { usersActions } from './Redux/Actions'
 import PublicPage from './pages/PublicPage';
 
 
-const App = ({fetchUserData, isAuth, hierarchy, fetchUserLogout,username}) =>{
+const App = ({fetchUserData, isAuth,  hierarchy,fetchUserLogout,username}) =>{
+  const [redir, setRedir] = React.useState(false)
+
+  React.useEffect(()=>{
+    setTimeout(() => {
+      setRedir(true) 
+  }, 3000)
+  })
+
   React.useEffect(()=>{
     if(isAuth){
        fetchUserData()
-   }else  return isAuth // TODO: ?
+   }return //?
   },[isAuth, fetchUserData])
 
  return(
-   <>
+  <>
+   {redir ? <Redirect to={'/auth'} /> : null}
   <Switch>
     <Route path="/auth" >
       <Auth 
