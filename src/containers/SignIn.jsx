@@ -21,7 +21,7 @@ const EnchantedSignIn = withFormik ({
   handleSubmit: (values, { setSubmitting, props}) => {
     props.fetchUserLogin(values)
       .then(()=>{
-        window.location.replace('/auth/tokenok')
+        
           setSubmitting(false)
         }
       ).catch(err => {
